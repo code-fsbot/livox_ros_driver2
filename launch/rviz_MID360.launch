@@ -11,7 +11,7 @@
 	<arg name="rviz_enable" default="true"/>
 	<arg name="rosbag_enable" default="false"/>
 	<arg name="cmdline_arg" default="$(arg bd_list)"/>
-	<arg name="msg_frame_id" default="livox_frame"/>
+	<arg name="msg_frame_id" default="livox_lidar"/>
 	<arg name="lidar_bag" default="true"/>
 	<arg name="imu_bag" default="true"/>
 	<!--user configure parameters for ros end--> 
@@ -30,7 +30,9 @@
 
 	<node name="livox_lidar_publisher2" pkg="livox_ros_driver2"
 	      type="livox_ros_driver2_node" required="true"
-	      output="screen" args="$(arg cmdline_arg)"/>
+	      output="screen" args="$(arg cmdline_arg)">
+		<remap from="livox/lidar" to="points_raw" />	  
+	</node>
 
 	<group if="$(arg rviz_enable)">
 		<node name="livox_rviz" pkg="rviz" type="rviz" respawn="true"
